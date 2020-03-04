@@ -10,8 +10,13 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "echarts": "^4.6.0",
     "element-ui": "^2.4.5",
+    "less": "^3.11.1",
+    "less-loader": "^5.0.0",
+    "v-charts": "^1.19.0",
     "vue": "^2.6.11",
+    "vue-resource": "^1.5.1",
     "vue-router": "^3.1.5"
   },
   "devDependencies": {

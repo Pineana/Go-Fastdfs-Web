@@ -23,8 +23,8 @@ export default {
   data () {
     return {
       Form: {
-        username: '123',
-        password: '13'
+        username: '',
+        password: ''
       },
       rules: {
         username: [
@@ -38,18 +38,52 @@ export default {
       }
     }
   },
+  created () {
+    var username = sessionStorage.getItem('username')
+    var password = sessionStorage.getItem('password')
+    if (username!=null&&password!=null){
+      this.$router.push({path:'control'})
+    }
+  },
   methods: {
     signin () {
-      this.$http.post('http://127.0.0.1:8080/user/signin' , this.Form , {emulateJSON:true}).then(
+      this.$http.post(this.GLOBAL.serverurl+'user/signin' , this.Form , {emulateJSON:true}).then(
         function (res) {
-          console.log('success')
           console.log(res)
+          if(res.data.state=='success'){
+            sessionStorage.setItem("username",this.Form.username)
+            sessionStorage.setItem("password",this.Form.password)
+            this.$router.push({path:'control'})
+          }else if(res.data.state=='have'){
+            this.$message('该用户已存在，请直接登录')
+            sessionStorage.setItem("username",this.Form.username)
+            sessionStorage.setItem("password",this.Form.password)
+          }
         },
-        function () {
-          console.log('fail')
+        function (res) {
+          console.log(res)
+            this.$message.error('服务器连接失败')
+        }
+      )
+    },
+    Login(){
+      this.$http.post(this.GLOBAL.serverurl+'user/login', this.Form ,{emulateJSON:true}).then(
+        function (res) {
+          console.log(res)
+            if (res.data.state=='success'){
+              sessionStorage.setItem("username",this.Form.username)
+              sessionStorage.setItem("password",this.Form.password)
+              this.$router.push({path:'control'})
+            }else{
+              this.$message.error('用户名或密码错误，请仔细检查');
+            }
+        },
+        function(res){
+            this.$message.error('服务器连接失败')
         }
       )
     }
+
   }
 
 }

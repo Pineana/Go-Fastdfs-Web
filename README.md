@@ -3,14 +3,14 @@
 ##### 该仓库存储的是前端原始代码
 ##### 如果需要使用请自行使用webpack进行打包或者前往release处下载
 ##### 界面展示
-![avatar](img/login.png)
+![login](./img/login.png)
 
-![avatar](img/control.png)
+![control](./img/control.png)
 
-![avatar](img/filupload.png)
+![fileupload](./img/filupload.png)
 
-![avatar](img/filelist.png)
+![filelist](./img/filelist.png)
 
-![avatar](img/grouplist.png)
+![grouplist](./img/grouplist.png)
 
-![avatar](img/accountset.png)
+![accountset](./img/accountset.png)

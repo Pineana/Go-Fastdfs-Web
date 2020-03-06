@@ -5,36 +5,36 @@
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>文件数</span>
-            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+            <i class="el-icon-files" style="float: right;margin-top: 2px;color: deepskyblue"></i>
           </div>
-          <div>20B</div>
+          <div>{{basicinfo.data.all.filecount}}</div>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>文件大小</span>
-            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+            <i class="el-icon-folder-opened" style="float: right;margin-top: 2px;color: deepskyblue"></i>
           </div>
-          <div>20B</div>
+          <div>{{(basicinfo.data.all.filesize/1048576).toFixed(2)}}MB</div>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>文件数(30天)</span>
-            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+            <i class="el-icon-files" style="float: right;margin-top: 2px;color: deepskyblue"></i>
           </div>
-          <div>20</div>
+          <div>{{basicinfo.data.all_30.filecount}}</div>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>卡片名称</span>
-            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+            <span>文件大小(30天)</span>
+            <i class="el-icon-folder-opened" style="float: right;margin-top: 2px;color: deepskyblue"></i>
           </div>
-          <div>20B</div>
+          <div>{{(basicinfo.data.all.filesize/1048576).toFixed(2)}}MB</div>
         </el-card>
       </el-col>
     </el-row>
@@ -42,37 +42,37 @@
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>文件数</span>
-            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+            <span>磁盘用量</span>
+            <i class="el-icon-receiving" style="float: right;margin-top: 2px;color: deepskyblue"></i>
           </div>
-          <div>20B</div>
+          <div>{{(basicinfo.data.disk.size/1073741824).toFixed(2)}}GB</div>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>文件大小</span>
-            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+            <span>磁盘剩余容量</span>
+            <i class="el-icon-pie-chart" style="float: right;margin-top: 2px;color: deepskyblue"></i>
           </div>
-          <div>20B</div>
+          <div>{{(basicinfo.data.disk.remainsize/1073741824).toFixed(2)}}GB</div>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>文件数(30天)</span>
-            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+            <span>索引节点使用数(Linux)</span>
+            <i class="el-icon-link" style="float: right;margin-top: 2px;color: deepskyblue"></i>
           </div>
-          <div>20</div>
+          <div>{{basicinfo.data.index.num}}</div>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>卡片名称</span>
-            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+            <span>剩余索引节点(Linux)</span>
+            <i class="el-icon-connection" style="float: right;margin-top: 2px;color: deepskyblue"></i>
           </div>
-          <div>20B</div>
+          <div>{{basicinfo.data.index.remainnum}}</div>
         </el-card>
       </el-col>
     </el-row>
@@ -81,7 +81,7 @@
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>快捷方式</span>
-            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+            <i class="el-icon-s-tools" style="float: right;margin-top: 2px;color: deepskyblue"></i>
           </div>
           <div class="quickbutton">
             <el-button v-for="item in quickbutton">
@@ -95,7 +95,7 @@
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>版本信息</span>
-            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+            <i class="el-icon-info" style="float: right;margin-top: 2px;color: deepskyblue"></i>
           </div>
           <div class="versioninfo">
             <el-table :data="tableData" border style="width: 100%" :show-header=false >
@@ -121,10 +121,26 @@
     name: 'Control',
     data(){
       return{
-        quickbutton:[{
-          imgsrc:"",
-          text:""
-        }],
+        basicinfo:{
+          data:{
+            all: {
+              "fileCount": 0,
+              "totalSize": 0
+            },
+            all_30:{
+              "fileCount": 0,
+              "totalSize": 0
+            },
+            disk:{
+              "size":0,
+              "remainsize":0
+            },
+            index:{
+              "num":0,
+              "remainnum":0
+            }
+          }
+        },
         tableData:[{
           title:"当前版本",
           value:"v1.3.14"
@@ -150,6 +166,30 @@
           ]
         }
       }
+    },
+    methods:{
+        GetBasicInfo(){
+          console.log('run')
+          this.$http.get(this.GLOBAL.serverurl+'api/basicinfo').then(
+            function (res) {
+              console.log(res)
+              if (res.data.data.state=="success"){
+                this.basicinfo = res.data
+              }else {
+                this.$message.error("服务器请求数据失败")
+                this.$router.push({path:"home"})
+              }
+            },
+            function (res) {
+              this.$message.error("服务器请求数据失败")
+              this.$router.push({path:"home"})
+            }
+          )
+        }
+    },
+    created () {
+      console.log('1')
+      this.GetBasicInfo()
     }
   }
 </script>

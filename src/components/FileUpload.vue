@@ -6,18 +6,18 @@
           <div slot="header" class="clearfix">
             <span>上传配置</span>
           </div>
-          <div class="inputlist">
+          <div class="inputlist" >
             <div class="input">
               <div class="title">场景：</div>
-              <el-input placehold="请输入场景"></el-input>
+              <el-input placehold="请输入场景" :model="UploadConfig.scene"></el-input>
             </div>
             <div class="input">
               <div class="title">路径：</div>
-              <el-input></el-input>
+              <el-input placehold="请输入路径" :model="UploadConfig.path"></el-input>
             </div>
             <div class="input">
               <div class="title">url前缀：</div>
-              <el-input></el-input>
+              <el-input placehold="请输入路径" :model="UploadConfig.url"></el-input>
             </div>
           </div>
         </el-card>
@@ -25,20 +25,22 @@
       <el-col :span="24" class="fileupload-bottom">
         <el-card>
           <div class="buttonline">
-              <el-button type="primary">选择文件</el-button>
-              <el-button type="success">上传全部</el-button>
+              <el-upload action="" :show-file-list="false" :before-upload="BeforeUpload" :auto-upload="false" ref="elupload">
+                <el-button type="primary">选择文件</el-button>
+              </el-upload>
+              <el-button type="success" @click="UploadALL">上传全部</el-button>
           </div>
           <div class="table">
-            <el-table>
+            <el-table :data="UploadList">
               <el-table-column label="文件名" width="220" prop="FileName">
               </el-table-column>
-              <el-table-column label="大小" width="150">
+              <el-table-column label="大小" width="150" prop="FileSize">
               </el-table-column>
-              <el-table-column label="状态" width="150">
+              <el-table-column label="状态" width="150" prop="Status">
               </el-table-column>
-              <el-table-column label="上传进度" width="250">
+              <el-table-column label="上传进度" width="300" prop="Prograss">
                 <template slot-scope="scope">
-                  <el-progress :text-inside="true" :stroke-width="26" :percentage="70"></el-progress>
+                  <el-progress :text-inside="true" :stroke-width="26" :percentage="0"></el-progress>
                 </template>
               </el-table-column>
               <el-table-column label="操作">
@@ -63,11 +65,44 @@
 
 <script>
   export default {
-    name: 'Fileupload'
+    name: 'Fileupload',
+    data(){
+      return{
+          UploadConfig:{
+            scene:"",
+            path:"",
+            url:"",
+          },
+          UploadList:[]
+      }
+    },
+    created () {
+
+    },
+    methods:{
+      BeforeUpload(file){
+        this.UploadList.push({
+          FileName:file.name,
+          FileSize:(file.size/1024).toFixed(2)+"KB",
+          Status:"待发送",
+        })
+      },
+      UploadALL(){
+        console.log('upload')
+        this.$refs.elupload.submit()
+      }
+    }
   }
+
 </script>
 
 <style scoped>
+  .buttonline{
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
   .fileupload{
     width: 98%;
   }

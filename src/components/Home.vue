@@ -45,21 +45,21 @@
                   <el-button icon="el-icon-s-fold" plain @click="Collapse"></el-button>
                 </el-tooltip>
                 <el-tooltip class="item" effect="dark" content="点击刷新" placement="bottom">
-                  <el-button icon="el-icon-refresh" plain></el-button>
+                  <el-button icon="el-icon-refresh" plain @click="Refresh"></el-button>
                 </el-tooltip>
               </el-button-group>
             </div>
             <div class="right">
               <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-              <el-dropdown>
+              <el-dropdown @command="handleCommand">
 						<span class="el-dropdown-link">
-							1131482051@qq.com<i class="el-icon-arrow-down el-icon--right"></i>
+							{{username}}<i class="el-icon-arrow-down el-icon--right"></i>
 						</span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>个人信息</el-dropdown-item>
-                  <el-dropdown-item>退出登录</el-dropdown-item>
-                  <el-dropdown-item>捐赠作者</el-dropdown-item>
-                  <el-dropdown-item>帮助中心</el-dropdown-item>
+                  <el-dropdown-item command="a">个人信息</el-dropdown-item>
+                  <el-dropdown-item command="b">退出登录</el-dropdown-item>
+                  <el-dropdown-item command="c">捐赠作者</el-dropdown-item>
+                  <el-dropdown-item command="d">帮助中心</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
@@ -86,6 +86,7 @@
     name: 'Home.vue',
     data(){
       return{
+        username:"",
         asidewidth:"50px",
         Tabs:{
           ontabs:['control'],
@@ -116,7 +117,24 @@
         }
       }
     },
+    created () {
+      var username = sessionStorage.getItem('username')
+      var password = sessionStorage.getItem('password')
+      if (username==null&&password==null){
+        this.$router.push({path:'login'})
+      }
+      this.username =sessionStorage.getItem("username")
+    },
     methods:{
+        Refresh(){
+          switch (this.Tabs.editableTabsValue) {
+            case 'control': this.$router.go(0);break;
+            case 'fileupload': this.$router.go(0);break;
+            case 'filelist': this.$router.go(0);break;
+            case 'grouplist': this.$router.go(0);break;
+            case 'accountset': this.$router.go(0);break;
+          }
+        },
         Collapse(){
           this.Aside.isCollapse=!this.Aside.isCollapse
         },
@@ -180,7 +198,8 @@
           }
         },
         handleTabSelect(res){
-          this.$router.push({path:res.name})
+          console.log('select')
+          this.$router.replace({path:res.name})
         },
         handleTabRemove(res){
           if (res=='control'){
@@ -200,6 +219,20 @@
           }else{
             this.Tabs.editableTabsValue=this.Tabs.ontabs[a]
             this.$router.push({path:this.Tabs.editableTabsValue})
+          }
+        },
+        handleCommand(c){
+          console.log(c)
+          switch (c) {
+              case "a":this.$router.push({path:'/accountset'});break;
+              case "b":
+                sessionStorage.clear()
+                this.$router.push({path:'/login'})
+                break;
+              case "c":this.$router.push({path:'/accountset'});break;
+              case "d":this.$router.push({path:'/accountset'});break;
+              default:
+                console.log(c)
           }
         }
     }

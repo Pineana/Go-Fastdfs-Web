@@ -7,7 +7,7 @@
 
 ![control](./img/control.png)
 
-![fileupload](./img/filupload.png)
+![fileupload](./img/fileupload.png)
 
 ![filelist](./img/filelist.png)
 

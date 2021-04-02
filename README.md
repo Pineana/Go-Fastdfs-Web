@@ -1,7 +1,7 @@
 # Go-fastdfs-Web
-### 基于Vue框架的Go-fastdfs的web管理页面
-##### 该仓库存储的是前端原始代码
-##### 如果需要使用请自行使用webpack进行打包或者前往release处下载
+### 基于Vue3.0框架的Go-fastdfs的web管理页面
+##### 该项目将开始持续维护 2021.4.1
+##### 原项目采用vue2.0框架开发，现改用vue3.0,基本使用element-plus 插件开发
 ##### 界面展示
 ![login](./img/login.png)
 
